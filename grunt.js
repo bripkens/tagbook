@@ -1,40 +1,37 @@
 /*global module:false*/
-module.exports = function(grunt) {
+module.exports = function (grunt) {
+  "use strict";
 
   // Project configuration.
   grunt.initConfig({
-    pkg: '<json:package.json>',
+    pkg: "<json:package.json>",
     meta: {
-      banner: '/*! <%= pkg.title || pkg.name %> - v<%= pkg.version %> - ' +
-        '<%= grunt.template.today("yyyy-mm-dd") %>\n' +
-        '<%= pkg.homepage ? "* " + pkg.homepage + "\n" : "" %>' +
-        '* Copyright (c) <%= grunt.template.today("yyyy") %> <%= pkg.author.name %>;' +
-        ' Licensed <%= _.pluck(pkg.licenses, "type").join(", ") %> */'
+      banner: "/*! <%= pkg.title || pkg.name %> - v<%= pkg.version %> - " +
+        "<%= grunt.template.today('yyyy-mm-dd') %>\n" +
+        "<%= pkg.homepage ? '* ' + pkg.homepage + '\n' : '' %>" +
+        "* Copyright (c) <%= grunt.template.today('yyyy') %> <%= pkg.author.name %>;" +
+        " Licensed <%= _.pluck(pkg.licenses, 'type').join('') %> */"
     },
     lint: {
-      files: ['grunt.js', 'lib/**/*.js', 'test/**/*.js']
-    },
-    qunit: {
-      files: ['test/**/*.html']
-    },
-    concat: {
-      dist: {
-        src: ['<banner:meta.banner>', '<file_strip_banner:lib/<%= pkg.name %>.js>'],
-        dest: 'dist/<%= pkg.name %>.js'
-      }
+      files: ["grunt.js", "lib/**/*.js", "test/**/*.js"]
     },
     min: {
       dist: {
-        src: ['<banner:meta.banner>', '<config:concat.dist.dest>'],
-        dest: 'dist/<%= pkg.name %>.min.js'
+        src: ["<banner:meta.banner>", "<config:concat.dist.dest>"],
+        dest: "dist/<%= pkg.name %>.min.js"
       }
     },
     watch: {
-      files: '<config:lint.files>',
-      tasks: 'lint qunit'
+      files: "<config:lint.files>",
+      tasks: "less:development lint"
+    },
+    server: {
+      port: 8000,
+      base: "."
     },
     jshint: {
       options: {
+        bitwise: true,
         curly: true,
         eqeqeq: true,
         immed: true,
@@ -45,14 +42,68 @@ module.exports = function(grunt) {
         undef: true,
         boss: true,
         eqnull: true,
-        browser: true
+        browser: true,
+        camelcase: true,
+        forin: true,
+        noempty: true,
+        nonew: true,
+        quotmark: "double",
+        unused: true,
+        strict: true,
+        trailing: true,
+        indent: 2,
+        maxparams: 3,
+        maxdepth: 3,
+        maxstatements: 10,
+        maxcomplexity: 4
       },
       globals: {}
     },
-    uglify: {}
+    uglify: {},
+    less: {
+      development: {
+        options: {
+        },
+        files: {
+          "css/app.css": "less/app.less"
+        }
+      },
+      production: {
+        options: {
+          yuicompress: true
+        },
+        files: {
+          "css/app.css": "less/app.less"
+        }
+      }
+    },
+    testacularServer: {
+      unit: {
+        options: {
+          keepalive: true
+        },
+        configFile: "test/unit.conf.js"
+      },
+      dev: {
+        options: {
+          keepalive: true
+        },
+        configFile: "test/unit.conf.js",
+        browsers: ["Chrome"],
+        singleRun: false,
+        autoWatch: true
+      }
+    }
   });
 
-  // Default task.
-  grunt.registerTask('default', 'lint qunit concat min');
+  grunt.loadNpmTasks("grunt-contrib-less");
+  grunt.loadNpmTasks("grunt-testacular");
 
+  // Default task.
+  grunt.registerTask("default",
+    "lint less:production testacularServer:unit");
+  grunt.registerTask("run",
+    "less:development server watch");
+  grunt.registerTask("test",
+    "testacularServer:dev");
 };

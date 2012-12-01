@@ -1,0 +1,12 @@
+{
+  "name": "tagbook",
+  "version": "0.0.1",
+  "dependencies": {
+    "jquery": "~1.8.3",
+    "bootstrap": "~2.2.1",
+    "requirejs": "~2.1.2",
+    "underscore-amd": "~1.4.1",
+    "qunit": "~1.10.0",
+    "angular": "latest"
+  }
+}

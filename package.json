@@ -11,8 +11,26 @@
     "url": "git@github.com:bripkens/tagbook.git"
   },
   "keywords": [
-    "boomarks"
+    "boomarks",
+    "tagging",
+    "javascript"
   ],
-  "author": "Ben Ripkens <bripkens.dev@gmail.com>",
-  "license": "MIT"
+  "author": {
+    "name": "Ben Ripkens",
+    "email": "ben.ripkens@codecentric.de",
+    "url": "http://bripkens.de"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "http://example.com"
+    }
+  ],
+  "devDependencies": {
+    "bower": "~0.6.3",
+    "testacular": "0.4.0",
+    "grunt": "~0.3.15",
+    "grunt-contrib-less": "~0.3.1",
+    "grunt-testacular": "0.2.2"
+  }
 }
