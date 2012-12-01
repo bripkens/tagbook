@@ -99,4 +99,5 @@ module.exports = function (grunt) {
     "less:development server watch");
   grunt.registerTask("test",
     "testacularServer:dev");
+  grunt.registerTask("travis", "lint");
 };
