@@ -15,12 +15,6 @@ module.exports = function (grunt) {
     lint: {
       files: ["grunt.js", "lib/**/*.js", "test/**/*.js"]
     },
-    min: {
-      dist: {
-        src: ["<banner:meta.banner>", "<config:concat.dist.dest>"],
-        dest: "dist/<%= pkg.name %>.min.js"
-      }
-    },
     watch: {
       files: "<config:lint.files>",
       tasks: "less:development lint"
@@ -59,7 +53,6 @@ module.exports = function (grunt) {
       },
       globals: {}
     },
-    uglify: {},
     less: {
       development: {
         options: {
