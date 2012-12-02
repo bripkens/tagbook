@@ -9,7 +9,8 @@ module.exports = function (grunt) {
       banner: "/*! <%= pkg.title || pkg.name %> - v<%= pkg.version %> - " +
         "<%= grunt.template.today('yyyy-mm-dd') %>\n" +
         "<%= pkg.homepage ? '* ' + pkg.homepage + '\n' : '' %>" +
-        "* Copyright (c) <%= grunt.template.today('yyyy') %> <%= pkg.author.name %>;" +
+        "* Copyright (c) <%= grunt.template.today('yyyy') %> " +
+        " <%= pkg.author.name %>;" +
         " Licensed <%= _.pluck(pkg.licenses, 'type').join('') %> */"
     },
     lint: {
@@ -49,7 +50,8 @@ module.exports = function (grunt) {
         maxparams: 3,
         maxdepth: 3,
         maxstatements: 10,
-        maxcomplexity: 4
+        maxcomplexity: 4,
+        maxlen: 80
       },
       globals: {}
     },
@@ -77,6 +79,12 @@ module.exports = function (grunt) {
         },
         configFile: "test/unit.conf.js"
       },
+      integration: {
+        options: {
+          keepalive: true
+        },
+        configFile: "test/integration.conf.js"
+      },
       dev: {
         options: {
           keepalive: true
@@ -99,5 +107,7 @@ module.exports = function (grunt) {
     "less:development server watch");
   grunt.registerTask("test",
     "testacularServer:dev");
+  grunt.registerTask("itest",
+    "testacularServer:integration");
   grunt.registerTask("travis", "lint");
 };

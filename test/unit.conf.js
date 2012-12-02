@@ -6,7 +6,9 @@
  autoWatch:true,
  browsers:true,
  singleRun:true,
- junitReporter:true
+ junitReporter:true,
+ reporters:true,
+ preprocessors: true
 */
 basePath = "../";
 
@@ -27,4 +29,10 @@ singleRun = true;
 junitReporter = {
   outputFile: "test_out/unit.xml",
   suite: "unit"
+};
+
+reporters = ['progress', 'coverage'];
+
+preprocessors = {
+  "**/tagbook/lib/*.js": "coverage"
 };
