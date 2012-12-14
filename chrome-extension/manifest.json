@@ -1,0 +1,22 @@
+{
+  "name": "tagbook",
+  "version": "0.0.1",
+  "manifest_version": 2,
+  "description": "Taggable Bookmarks",
+  "browser_action": {
+    "default_icon": "icon.png",
+    "default_popup": "popup/popup.html",
+    "default_title": "Tagbook"
+  },
+  "permissions": [
+    "notifications",
+    "tabs"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "css": ["content/content.css"],
+      "js": ["jquery-1.8.3.js", "content/content.js"]
+    }
+  ]
+}
