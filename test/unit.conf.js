@@ -26,11 +26,6 @@ browsers = ["PhantomJS"];
 autoWatch = false;
 singleRun = true;
 
-junitReporter = {
-  outputFile: "test_out/unit.xml",
-  suite: "unit"
-};
-
 reporters = ['progress', 'coverage'];
 
 preprocessors = {

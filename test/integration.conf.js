@@ -29,11 +29,4 @@ proxies = {
   "/": "http://localhost:8000/"
 };
 
-preprocessors = {
-  "**/tagbook/lib/*.js": "coverage"
-};
-
-coverageReporter = {
-  type : 'html',
-  dir : 'coverage-integration/'
-};
+reporters = ['progress'];

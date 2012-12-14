@@ -4,6 +4,7 @@ node_modules/
 components/
 css/
 coverage/
+coverage-integration/
 
 ### Node.gitignore
 lib-cov
