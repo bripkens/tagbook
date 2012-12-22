@@ -15,7 +15,8 @@
 (defn save [req]
   (let [data (deserialise (:body req))]
     (datastore/save data)
-    (cors-response {:ok true})))
+    (println (str "Stored bookmark: " (json/write-str data)))
+    (cors-response (json/write-str {:ok true}))))
 
 (defn search [{params :params :as req}]
   (let [query (:query params)

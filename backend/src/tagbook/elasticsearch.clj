@@ -12,7 +12,8 @@
 (def bookmark-mapping-types {:bookmark {:properties {
     :url          {:type "string" :store "yes"}
     :description  {:type "string" :store "yes" :analyzer "snowball"}
-    :tags         {:type "string" :index_name "tag"}}}})
+    :tags         {:type "string" :index_name "tag"}
+    :scroll       {:type "integer" :store "yes" :null_value 0}}}})
 
 (defn ensure-connected! [] (esr/connect! endpoint))
 

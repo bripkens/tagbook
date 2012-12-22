@@ -9,13 +9,18 @@ function createNotification(title, body) {
 };
 
 function saveBookmark() {
+  var scrollTop = 0;
+  if ($("#inDoSaveScrollPosition").is(":checked")) {
+    scrollTop = parseInt($("#inScrollTop").val(), 10);
+  }
+
   var bookmark = {
     tags: $("#inTags").val().split(/[ ,]+/),
     description: $("#inDescription").val(),
-    url: $("#inUrl").val()
+    url: $("#inUrl").val(),
+    scrollTop: scrollTop
   };
 
-  console.log('bookmark: ', bookmark);
   $.ajax({
     type: 'POST',
     url: 'http://localhost:3000/bookmark',
@@ -38,5 +43,13 @@ $(function() {
   chrome.tabs.getSelected(null, function(tab) {
     $("#inUrl").val(tab.url);
     $("#inDescription").val(tab.title);
+
+    chrome.tabs.sendMessage(tab.id, "getScrollTop", function(response) {
+      $("#inScrollTop").val(response.scrollTop);
+    });
+
+    // chrome.tabs.executeScript(tab.id, {code: "return window.scrollY;"}, function() {
+    //   console.log('arguments: ', arguments);
+    // })
   });
 });
