@@ -6,21 +6,22 @@ function showProposals(proposals) {
 
   proposals.forEach(function(proposal) {
     var li = document.createElement('li');
+    var bookmark = proposal.bookmark;
 
-    if (proposal.description) {
+    if (bookmark.description) {
       var descNode = document.createElement("span");
       descNode.classList.add("tagbook-description");
-      $(descNode).text(proposal.description);
+      $(descNode).text(bookmark.description);
       li.appendChild(descNode);
     }
 
     var urlNode = document.createElement("span");
     urlNode.classList.add("tagbook-url");
-    $(urlNode).text(proposal.url);
+    $(urlNode).text(bookmark.url);
     li.appendChild(urlNode);
 
     $(li).click(function() {
-      window.location.href = proposal.url;
+      window.location.href = bookmark.url;
     });
 
     output.append(li);
@@ -40,7 +41,6 @@ function searchForProposals() {
   var url = "http://localhost:3000/search/" + query;
   $.ajax({
     contentType: "text/plain",
-    data: { query: query },
     url: url,
     success: function(result) {
       showProposals(JSON.parse(result));
