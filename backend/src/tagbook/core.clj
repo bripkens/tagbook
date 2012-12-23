@@ -3,6 +3,7 @@
   (:use [clojure.string :only (split)])
   (:require [clojure.data.json :as json]
             [compojure.route :as route]
+            [ring.util.response :as resp]
             [tagbook.elasticsearch :as datastore]))
 
 (defn deserialise [httpInput]
@@ -24,6 +25,7 @@
     (cors-response (json/write-str findings))))
 
 (defroutes app
+  (GET "/" [] (resp/file-response "index.html" {:root "resources/public"}))
   (GET "/search/:query" [] search)
   (POST "/bookmark" [] save)
   (route/resources "/")
