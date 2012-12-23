@@ -24,7 +24,7 @@
     (cors-response (json/write-str findings))))
 
 (defroutes app
-  (GET "/" [] "Welcome to Tagbook!")
   (GET "/search/:query" [] search)
   (POST "/bookmark" [] save)
+  (route/resources "/")
   (route/not-found "<h1>Page not found</h1>"))
