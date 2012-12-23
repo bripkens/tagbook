@@ -1,0 +1,29 @@
+body {
+  margin: 2em;
+}
+
+table th:first-child {
+  width: 300px;
+}
+
+table tbody tr:not(.example) td:first-child {
+  color: hsl(200, 57%, 50%);
+}
+
+table tbody tr:not(.example):hover {
+  cursor: pointer;
+  background-color: #f5f5f5;
+}
+
+table tr.example {
+  display: none;
+}
+
+table tr.example h3 {
+  font-size: 20px;
+  line-height: 30px;
+}
+
+table tr.example td {
+  border-top: 0;
+}

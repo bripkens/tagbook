@@ -2,13 +2,100 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Tagbook API overview</title>
+    <title>REST API reference - Tagbook</title>
+
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/prism.css">
+    <link rel="stylesheet" href="css/main.css">
   </head>
   <body>
-    <h1>Tagbook API overview</h1>
+    <div class="container">
+      <h1>REST API Reference</h1>
 
-    <p>
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Odio neque dolore reiciendis quas aut sunt deleniti pariatur quaerat voluptatibus sit sequi velit quod debitis dolor officiis sint nam ducimus beatae.
-    </p>
+      <p class="lead">
+        Welcome to the Tagbook REST API reference.
+      </p>
+
+      <h2>General Notes</h2>
+      Click on each resources' row in the following table to see an example
+      for the resource's input or output.
+
+      <h2>Resources</h2>
+      <table class="table">
+      <thead>
+        <tr>
+          <th>Resource</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>GET search/:query</td>
+          <td>
+            Returns up to 20 search results for the given search query. You
+            can freely use the <a href="http://lucene.apache.org/core/old_versioned_docs/versions/2_9_1/queryparsersyntax.html"
+            title="Description of the lucense query syntax">
+              Lucene query syntax
+            </a>and its wildcard, fuzzy and proximity searches against the
+            bookmarks' URL, description and tag attributes.
+          </td>
+        </tr>
+        <tr class="example">
+          <td colspan="2"><h3>Output</h3>
+<pre><code class="language-javascript">[
+  {
+    "id": "da6sa4hu23renb3m",
+    "score": 1,
+    "bookmark": {
+      "url": "http://www.google.com",
+      "description": "Awesome search engine",
+      "tags": ["google", "search"],
+      "scrollTop": 0
+    }
+  }, {
+    "id": "la50injds18as",
+    "score": 0.75,
+    "bookmark": {
+      "url": "http://www.bing.com",
+      "description": "Search engine with pictures",
+      "tags": ["microsoft", "search"],
+      "scrollTop": 400
+    }, {
+    "id": "je81ga421i31ban",
+    "score": 0.5,
+    "bookmark": {
+      "url": "http://www.baidu.com",
+      "description": "Chinese language search engine",
+      "tags": ["chinese", "search"],
+      "scrollTop": 0
+    }
+  }
+]</code></pre>
+          </td>
+        </tr>
+        <tr>
+          <td>POST bookmark/</td>
+          <td>
+            Add a new bookmark.
+          </td>
+        </tr>
+        <tr class="example">
+          <td colspan="2"><h3>Input</h3>
+<pre><code class="language-javascript">{
+  "url": "http://www.google.com",
+  "description": "Awesome search engine",
+  "tags": ["google", "search"],
+  "scrollTop": 0
+}</code></pre>
+          </td>
+        </tr>
+      </tbody>
+      </table>
+    </div>
+
+    <script src="js/jquery-1.8.3.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/prism.js"></script>
+    <script src="js/main.js"></script>
   </body>
 </html>
