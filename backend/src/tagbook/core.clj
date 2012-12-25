@@ -24,8 +24,11 @@
         findings (datastore/query query)]
     (cors-response (json/write-str findings))))
 
+(defn info [req] (cors-response (json/write-str {"ok" true})))
+
 (defroutes app
   (GET "/" [] (resp/file-response "index.html" {:root "resources/public"}))
+  (GET "/info" [] info)
   (GET "/search/:query" [] search)
   (POST "/bookmark" [] save)
   (route/resources "/")

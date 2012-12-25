@@ -1,0 +1,59 @@
+<!doctype html>
+<html ng-app ng-csp>
+  <head>
+    <meta charset="utf-8">
+    <title>Options - Tagbook</title>
+    <link rel="icon" type="image/png" href="../icon.png" />
+
+    <link rel="stylesheet" href="../bootstrap.css">
+    <link rel="stylesheet" href="options.css">
+    <script src="../jquery-1.8.3.js"></script>
+    <script src="../angular.js"></script>
+    <script src="options.js"></script>
+  </head>
+  <body ng-controller="OptionsCtrl">
+    <div class="container">
+      <h2>Tagbook Options</h2>
+
+      <p class="lead">
+        Use these configuration options to define where your tagbook backend
+        is installed and what HTTP authentication credentials should be used.
+      </p>
+
+      <div class="alert alert-success" ng-show="message">{{message}}</div>
+      <div class="alert alert-error" ng-show="error">{{error}}</div>
+
+      <form class="form-horizontal" ng-submit="save()">
+        <div class="control-group">
+          <label class="control-label" for="inputURL">URL</label>
+          <div class="controls">
+            <input type="url" id="inputURL" placeholder="http://example.com"
+                   ng-model="url" ng-change="hideMessages()">
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="inputUsername">Username</label>
+          <div class="controls">
+            <input type="text" id="inputUsername" placeholder="Username"
+                   ng-model="username" ng-change="hideMessages()">
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="inputPassword">Password</label>
+          <div class="controls">
+            <input type="password" id="inputPassword" placeholder="Password"
+                   ng-model="password" ng-change="hideMessages()">
+          </div>
+        </div>
+        <div class="control-group">
+          <div class="controls">
+            <button type="submit" class="btn btn-primary" ng-click="save()">
+              Save
+            </button>
+            <button type="submit" class="btn" ng-click="test($event)">Test</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </body>
+</html>
