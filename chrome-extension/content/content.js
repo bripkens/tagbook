@@ -176,7 +176,6 @@
     }
     hideMessage();
 
-    console.log("Sending message");
     chrome.extension.sendMessage({
       action: "search",
       query: query

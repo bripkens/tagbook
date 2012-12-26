@@ -9,7 +9,7 @@ chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
   var password = localStorage.getItem("tagbook-password") || null;
 
   if (!query || !username || !password) {
-    sendResponse("Tagbook server not configured!", null);
+    sendResponse({error: "Tagbook server not configured!", data: null});
   } else {
     jQuery.ajax({
       url: url + "/search/" + encodeURIComponent(query),
