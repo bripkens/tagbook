@@ -1,34 +1,34 @@
 (ns tagbook.core
-  (:use compojure.core)
-  (:use [clojure.string :only (split)])
+  (:use [compojure.core]
+        [clojure.string :only (split)]
+        [clojure.tools.logging :only (info error)])
   (:require [clojure.data.json :as json]
             [compojure.route :as route]
             [ring.util.response :as resp]
             [tagbook.elasticsearch :as datastore]))
 
-(defn deserialise [httpInput]
-  (json/read-json (slurp httpInput :encoding "UTF8")))
-
-(defn cors-response [body]
-  {:body body :headers {"Access-Control-Allow-Origin" "*"
-                        "Access-Control-Allow-Headers" "X-Requested-With"}})
+(defn response [data]
+  (-> (resp/response (json/write-str data))
+      (resp/content-type "application/json")
+      (resp/charset "UTF8")
+      (resp/header "Access-Control-Allow-Origin" "*")
+      (resp/header "Access-Control-Allow-Headers" "X-Requested-With")))
 
 (defn save [req]
-  (let [data (deserialise (:body req))]
+  (let [data (json/read-str (slurp (:body req) "UTF8"))]
     (datastore/save data)
-    (println (str "Stored bookmark: " (json/write-str data)))
-    (cors-response (json/write-str {:ok true}))))
+    (info "Stored bookmark:" data)
+    (response {:ok true})))
 
 (defn search [{params :params :as req}]
   (let [query (:query params)
         findings (datastore/query query)]
-    (cors-response (json/write-str findings))))
-
-(defn info [req] (cors-response (json/write-str {"ok" true})))
+    (info "Got queried for:" query)
+    (response findings)))
 
 (defroutes app
   (GET "/" [] (resp/file-response "index.html" {:root "resources/public"}))
-  (GET "/info" [] info)
+  (GET "/info" [] (response {"ok" true}))
   (GET "/search/:query" [] search)
   (POST "/bookmark" [] save)
   (route/resources "/")
