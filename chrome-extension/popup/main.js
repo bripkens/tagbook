@@ -47,9 +47,5 @@ $(function() {
     chrome.tabs.sendMessage(tab.id, "getScrollTop", function(response) {
       $("#inScrollTop").val(response.scrollTop);
     });
-
-    // chrome.tabs.executeScript(tab.id, {code: "return window.scrollY;"}, function() {
-    //   console.log('arguments: ', arguments);
-    // })
   });
 });

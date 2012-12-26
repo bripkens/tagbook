@@ -176,22 +176,19 @@
     }
     hideMessage();
 
-    var url = apiEndpoint + encodeURIComponent(query);
-    $.ajax({
-      url: url,
-      dataType: "json",
-      success: function(result) {
+    console.log("Sending message");
+    chrome.extension.sendMessage({
+      action: "search",
+      query: query
+    }, function(response) {
+      if (response.error) {
+        showMessage(response.error);
+        previousQuery = null;
+        return;
+      } else if (query = input.value) {
         // make sure that we are displaying the results for the entered query.
         // Network latency is a bitch!
-        if (query === input.value) {
-          showProposals(result);
-        }
-      },
-      error: function(jqXHR, textStatus, errorThrown) {
-        showMessage("Damn, the server request resulted in an error!");
-        console.log('textStatus: ', textStatus);
-        console.log('errorThrown: ', errorThrown);
-        previousQuery = null;
+        showProposals(response.data);
       }
     });
   };
